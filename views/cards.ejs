@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cards</title>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="/js/jquery-3.6.4.min.js"></script>
+    <link rel="icon" type="image/png" href="/images/auca.png" />
+    <style>
+        :root {
+            --primary: #005596;
+            --darkprimary: #005576;
+            --white: #ffffff;
+            --accent: #581845;
+            --content: #FFF;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        body {
+
+            background-color: #f0f2f5;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            padding: 1%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: top;
+            padding: 16px;
+        }
+
+        .left,
+        .right,
+        .content {
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            overflow-y: auto;
+            overflow-x: hidden;
+
+        }
+
+        .left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ======================================================================================== */
+        table {
+            height: auto;
+            width: 100%;
+            overflow-y: auto;
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+        }
+
+        .header {
+            background-color: #ccc;
+        }
+
+        thead tr {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+
+        tbody td {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        tbody tr:last-of-type {
+            /* border-bottom: 3px solid var(--primary); */
+        }
+
+        th,
+        td {
+            text-align: center;
+            padding: 12px 15px;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f3f3f3;
+        }
+
+        tbody tr:hover {}
+
+        .row:hover {
+            color: var(--primary);
+
+            cursor: pointer;
+        }
+
+        .content {
+            width: 100%;
+            height: 100%;
+        }
+
+        #content-header {
+            height: 124px;
+            background-color: var(--primary);
+            width: 100%;
+        }
+
+        .left {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        .search-input,
+        .pin-input {
+            width: 80%;
+            height: 48px;
+            min-height: 48px;
+            background-color: white;
+            margin: 16px;
+            padding-left: 12px;
+            padding-right: 12px;
+            border: none;
+            outline: none;
+            font-size: large;
+        }
+
+        .search-input {
+            border-radius: 4px;
+        }
+
+        .pin-input {
+            border-radius: 24px;
+        }
+
+        .pin-input,
+        .search-input {
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+        }
+
+        /* .left {
+            background-color: rgba(0, 0, 0, 0.1);
+        } */
+
+        .content {
+            margin-left: 16px;
+            margin-right: 16px;
+        }
+
+        .top-bar {
+            display: flex;
+            height: 72px;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .left .actions {
+            width: 80%;
+            margin-top: 24px;
+            list-style: none;
+            list-style-type: none;
+            padding: 0;
+            margin-left: 16px;
+
+        }
+
+        #message {
+            margin-top: auto;
+            margin-right: auto;
+            padding-left: 16px;
+            padding-bottom: 16px;
+            font-weight: 400;
+            font-size: larger;
+        }
+
+        .actions button {
+            width: 90%;
+            min-height: 48px;
+            margin-bottom: 16px;
+            border-radius: 24px;
+            font-size: large;
+            background-color: white;
+            padding: 10px;
+            cursor: pointer;
+            border: 1px solid var(--primary);
+        }
+
+        .actions :hover {
+            background-color: #eee;
+        }
+
+        .left .active {
+            background-color: #ddd;
+            border: 2px solid white;
+        }
+
+        .left hr {
+            width: 100%;
+
+        }
+
+        .search-input {
+            font-family: FontAwesome;
+            width: 100%;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: none;
+            width: 40%;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 16px;
+        }
+
+        .close {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-header {
+            padding: 2px 16px;
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+        }
+
+        .modal-body {
+            padding: 16px;
+            background-color: #EEE;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-footer {
+            padding: 16px;
+            background-color: var(--primary);
+            color: white;
+            font-weight: 100 !important;
+            border-bottom-right-radius: 16px;
+            border-bottom-left-radius: 16px;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .noselect {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .p-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: large;
+        }
+
+        .p-btn:hover {
+            background-color: var(--darkprimary);
+        }
+
+        .pin-input {
+            width: 50% !important;
+        }
+
+        #server-response {
+            margin-left: auto;
+        }
+
+        .error {
+            color: #D8000C;
+            font-weight: normal;
+            margin-left: auto;
+
+        }
+
+        .info {
+            color: white;
+            font-weight: normal;
+        }
+
+        .apps-response {
+            min-height: 20%;
+            min-width: 40%;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ddd;
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--accent);
+            font-size: larger;
+            font-weight: bold;
+            margin-top: auto;
+            margin-bottom: auto;
+            padding: 16px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+            text-transform: uppercase;
+        }
+
+        .label-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        #nav-menu {
+            display: none;
+            margin-left: auto;
+            padding: 16px;
+            font-size: larger;
+            color: var(--accent);
+            cursor: pointer;
+        }
+
+        .toolbar {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        #title {
+            display: none;
+            padding-left: 6px;
+            font-size: larger;
+            margin-right: auto;
+        }
+
+
+        @media screen and (max-width: 600px) {
+            #title {
+                display: block;
+            }
+
+            .container {
+                width: 100%;
+                height: 100%;
+                flex-direction: column;
+            }
+
+            .left {
+                width: 100%;
+                height: 56px;
+                overflow-y: hidden;
+                transition: height 0.5s;
+            }
+
+            .content {
+                width: 100%;
+                height: 100%;
+                margin-top: 16px;
+                margin-bottom: 16px;
+                margin-left: 0px;
+                margin-right: 0px;
+                background-color: var(--content);
+            }
+
+            #nav-menu {
+                display: block;
+            }
+
+            .expanded-nav {
+                height: 75%;
+                overflow-y: auto;
+            }
+
+            .collapsed-nav {
+                height: 56px;
+                overflow-y: hidden;
+            }
+        }
+
+        .tbl-btn {
+            background-color: var(--darkprimary);
+            cursor: pointer;
+            color: white;
+            border: none;
+            outline: none;
+            padding: 6px;
+            border-radius: 4px;
+        }
+
+        .tbl-btn:hover {
+            background-color: var(--primary);
+        }
+
+        tbody td img {
+            height: 48px;
+        }
+    </style>
+</head>
+
+<body>
+    <%if(locals.id){%>
+        <input type="hidden" id="_id" name="_id" value="<%=id%>">
+        <%}else{%>
+            <input type="hidden" id="_id" name="_id" value="0">
+            <%}%>
+                <div class="container">
+                    <div class="left" id="nav">
+                        <div class="toolbar">
+                            <div id="title">Applications</div>
+                            <i class="fa fa-bars" id="nav-menu"></i>
+                        </div>
+                        <div class="actions"></div>
+                        <span id="message"></span>
+                    </div>
+                    <div class="content">
+                        <div class="top-bar">
+                            <input type="search" class="search-input" id="search-input" name="search-input"
+                                placeholder="&#xf002 Search application" onkeyup="tableFilter()">
+                        </div>
+                        <table id="table">
+                            <tr class="header" id="h1">
+                                <th> Photo </th>
+                                <th> Code </th>
+                                <th> Student id </th>
+                                <th> Names </th>
+                                <th> Faculty </th>
+                                <th> Department </th>
+                                <th> Program </th>
+                                <th> </th>
+
+                            </tr>
+
+                            <tbody id="tbody"></tbody>
+                        </table>
+                        <div class="apps-response" id="apps-response">
+                            <i class="fa fa-exclamation-triangle label-icon"></i>
+                            <label id="msg-label">No data available</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="modal" class="modal noselect">
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Admin access</h2>
+                        </div>
+                        <div class="modal-body">
+                            <input type="password" id="pin-input" class="pin-input" name="search-input"
+                                placeholder="Enter pin here">
+                            <button type="button" class="p-btn" id="continue">
+                                Continue&nbsp;&nbsp;&nbsp;
+                                <i id="cont-pbar" class="fa fa-circle-o-notch fa-spin"></i>
+                            </button>
+                            <span id="client-response" class="error"></span>
+                        </div>
+                        <div class="modal-footer">
+                            <span>AUCA</span>
+                            <span id="server-response" class="info"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <script>
+
+                    var navBurger = document.getElementById('nav-menu');
+
+                    var nav = document.getElementById('nav');
+
+                    navBurger.addEventListener('click', () => {
+
+                        if (nav.classList.contains('expanded-nav')) {
+                            nav.classList.remove('expanded-nav');
+                            nav.classList.add('collapsed-nav');
+
+                        } else if (nav.classList.contains('collapsed-nav')) {
+                            nav.classList.remove('collapsed-nav');
+                            nav.classList.add('expanded-nav');
+
+                        } else {
+                            nav.classList.remove('collapsed-nav');
+                            nav.classList.add('expanded-nav');
+
+                        }
+                    });
+
+                    var actionBtns = document.querySelectorAll('.action-btn');
+                    var searchInput = document.getElementById('search-input');
+                    var modal = document.getElementById("modal");
+                    var span = document.getElementsByClassName("close")[0];
+
+                    var contBtn = document.getElementById('continue');
+                    var pinInput = document.getElementById('pin-input');
+                    var responseSpan = document.getElementById('client-response');
+                    var pinBar = document.getElementById('cont-pbar');
+                    var appsTable = document.getElementById('apps-table');
+                    var appsResponse = document.getElementById('apps-response');
+                    var msgLabel = document.getElementById('msg-label');
+
+                    $('#cont-pbar').hide();
+
+                    var isAuthenticated = false;
+
+                    var auth = document.getElementById('_id').value;
+                    if (auth !== '0') {
+                        isAuthenticated = true;
+                    } else {
+                        isAuthenticated = false;
+                    }
+
+                    document.addEventListener('DOMContentLoaded', () => {
+
+                        var localAdmin = localStorage.getItem('admin');
+                        if (localAdmin === null && localAdmin !== '1') {
+                            modal.style.display = "block";
+                        } else {
+                            $.ajax({
+                                url: "/admin/cards/",
+                                type: "POST",
+                                data: {
+
+                                },
+                                success: function (data) {
+                                    console.log(data);
+                                    populateTable(data);
+                                    if (data.length === 0) $('#message').text('No data available');
+                                    else $('#message').text('');
+
+                                },
+                                error: function (jqXHR, exception) {
+                                    console.log('Error')
+                                }
+                            });
+                        }
+                    });
+
+                    appsResponse.style.display = 'none';
+
+                    contBtn.addEventListener('click', () => {
+                        var pin = pinInput.value;
+
+                        if (pin) {
+                            responseSpan.innerText = ''
+                            $('#cont-pbar').show();
+                            $.ajax({
+                                url: "/admin/view/apps/",
+                                type: "POST",
+                                data: {
+                                    id: pin,
+                                },
+                                success: function (data) {
+                                    $('#cont-pbar').hide();
+                                    if (data === '1') {
+                                        modal.style.display = "none";
+                                        pinInput.value = '';
+                                        document.getElementById('_id').value = data;
+                                        localStorage.setItem('admin', data);
+
+                                        $.ajax({
+                                            url: "/admin/cards/",
+                                            type: "POST",
+                                            data: {
+                                                id: pin,
+                                            },
+                                            success: function (data) {
+                                                console.log('Elems ' + data);
+                                                populateTable(data);
+                                            },
+                                            error: function (jqXHR, exception) {
+                                                console.log('Error')
+                                            }
+                                        });
+
+                                    } else {
+                                        pinInput.value = '';
+                                        $('#server-response').html('Access denied');
+                                    }
+
+                                },
+                                error: function (jqXHR, exception) {
+                                    $('#cont-pbar').hide();
+                                    $('#server-response').html('The server responded with an error!');
+                                }
+                            });
+
+                        } else {
+                            responseSpan.innerText = 'Please enter pin!'
+                        }
+                    });
+
+                    function tableFilter() {
+                        var filter, table, tr, td, i, txtValue;
+                        filter = searchInput.value.toUpperCase();
+                        table = document.getElementById("table");
+                        tr = table.getElementsByTagName("tr");
+                        for (i = 0; i < tr.length; i++) {
+                            // td = tr[i].getElementsByTagName("td")[0];
+                            alltags = tr[i].getElementsByTagName("td");
+                            isFound = false;
+                            for (j = 0; j < alltags.length; j++) {
+                                td = alltags[j];
+                                if (td) {
+                                    txtValue = td.textContent || td.innerText;
+                                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                        tr[i].style.display = "";
+                                        j = alltags.length;
+                                        isFound = true;
+                                    }
+                                }
+                            }
+                            if (!isFound && tr[i].className !== "header") {
+                                tr[i].style.display = "none";
+                            }
+                        }
+                    }
+
+
+                    function populateTable(data) {
+                        var dynamicData = '';
+                        console.log('Populating');
+                        for (let i = 0; i < data.length; i++) {
+                            var code = data[i]._id;
+                            dynamicData += "<tr class='row'>"
+                                + "<td> <img src=\"/uploads/docs/cardprofiles/" + data[i]._id + ".jpg\" alt=\"Profile\"></td>"
+                                + "<td>" + data[i]._id + "</td>"
+                                + "<td>" + data[i].st_id + "</td>"
+                                + "<td>" + data[i].st_names + "</td>"
+                                + "<td>" + data[i].faculty + "</td>"
+                                + "<td>" + data[i].department + "</td>"
+                                + "<td>" + data[i].program + "</td>"
+                                + "<td><button class='tbl-btn' value='" + data[i]._id + "'>Confirm</button></td>"
+                                + "</tr>";
+                        }
+
+                        $('#tbody').html(dynamicData);
+                        var tBtns = document.getElementsByClassName('tbl-btn');
+                        console.log(tBtns.length);
+                        for (let i = 0; i < tBtns.length; i++) {
+                            tBtns[i].addEventListener('click', () => {
+                                review(tBtns[i].value)
+                            })
+                        }
+                        console.log('Done populating');
+                    }
+
+                    function review(v) {
+                        console.log(v);
+                        //localStorage.setItem('app-code', v)
+                        //document.location.href = '/appli';
+                        $.ajax({
+                            url: "/altering/card/",
+                            type: "POST",
+                            data: {
+                                code: v
+                            },
+                            success: function (data) {
+                                console.log(data);
+                                if (data==='1') document.location.href = '/admin/studentcards';
+
+                            },
+                            error: function (jqXHR, exception) {
+                                console.log('Error')
+                            }
+                        });
+                    }
+
+
+
+                </script>
+</body>
+
+</html>

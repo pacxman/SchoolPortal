@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="/js/jquery-3.6.4.min.js"></script>
+    <!-- <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script> -->
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js">
+    </script>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/swiffy-slider@1.6.0/dist/js/swiffy-slider.min.js" crossorigin="anonymous"
+        defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/swiffy-slider@1.6.0/dist/css/swiffy-slider.min.css" rel="stylesheet"
+        crossorigin="anonymous">
+
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+
+    <link rel="stylesheet" type="text/css" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+
+    <link rel="stylesheet" href="/css/shadow.css">
+    <title>AUCA&mdash;Student portal</title>
+    <link rel="icon" type="image/png" href="/images/auca.png" />
+    <style>
+        select {
+            cursor: pointer !important;
+        }
+
+        .back {
+            width: 100% !important;
+
+            background-image: url('/images/blue-pattern.svg') !important;
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: white !important;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center;
+        }
+
+        .back:hover {
+            background-color: #23395d !important;
+        }
+
+        .back .fa {
+            color: #23395d !important;
+            font-size: xx-large;
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <% if (locals.error){%><input type="hidden" id="loc-error" name="loc-error" value="<%= error %>">
+        <%}%>
+            <% if (locals.id) {%><input type="hidden" id="id" name="id" value="<%= id %>">
+                <%}%>
+
+
+                    <div id="heading" class="text-center">
+                        <!-- <img src="images/auca.png" style="height: 78px; padding: 5px;"> -->
+                        <img src="/images/student-portal.png" style="height: 75%;" id="home-img">
+                    </div>
+
+
+                    <div id="m-content" class="shadow-dreamy">
+                        <div class="tab pc1" id="tab">
+                            <button class="tablinks" onclick="openTab(event, 'Home')" id="defaultOpen">
+                                <div class="circle-icon d-flex align-items-center justify-content-center me-3"> <i
+                                        class="fa fa-home"></i>
+                                </div>
+                                <div class="button-label">Home</div>
+                            </button>
+                            <button id="appl-btn" class="tablinks" onclick="openTab(event, 'Application')">
+                                <div class="circle-icon d-flex align-items-center justify-content-center me-3"> <i
+                                        class="fa fa-user"></i>
+                                </div>
+                                <div class="button-label">Application</div>
+                            </button>
+                            <button class="tablinks" onclick="openTab(event, 'Pending')">
+                                <div class="circle-icon d-flex align-items-center justify-content-center me-3"> <i
+                                        class="fa fa-clock-o"></i>
+                                </div>
+                                <div class="button-label">Document</div>
+                            </button>
+                            <button class="tablinks" onclick="openTab(event, 'Assessment')">
+                                <div class="circle-icon d-flex align-items-center justify-content-center me-3"> <i
+                                        class="fa fa-star"></i> </div>
+                                <div class="button-label">Assessments</div>
+                            </button>
+                            <button class="tablinks" onclick="openTab(event, 'Drop')">
+                                <div class="circle-icon d-flex align-items-center justify-content-center me-3"> <i
+                                        class="fa fa-caret-square-o-right"></i>
+                                </div>
+                                <div class="button-label">Drop out</div>
+                            </button>
+                            <button class="tablinks" onclick="openTab(event, 'Card')">
+                                <div class="circle-icon d-flex align-items-center justify-content-center me-3"><i
+                                        class="fa fa-id-card" aria-hidden="true"></i></i>
+                                </div>
+                                <div class="button-label">Student card</div>
+                            </button>
+                            <button class="back" onclick="toggleTab()"
+                                style="position: absolute; bottom: 0; left: 0; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;"
+                                id="back">
+                                <div id="about-icon" class="round-icon"
+                                    style="height: 36px; width: 36px; border-radius: 36px; background-color: white; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fa fa-info"></i>
+                                </div>
+                            </button>
+                        </div>
+
+                        <div id="Home" class="tabContent"
+                            style="display: flex !important; align-items: center !important; justify-content: center !important;">
+                            <div class="swiffy-slider"
+                                style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                <ul class="slider-container">
+                                    <li>
+                                        <div class="item">
+                                            <div class="l">
+                                                <img src="/images/0.jpg">
+                                            </div>
+                                            <div class="r">
+                                                <img src="/images/w1.png" style="width: 90%;">
+                                                <h1 style="color: white; font-size: xx-larger;">‒</h1>
+                                                <img src="/images/w3.png" style="width: 90%;">
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item">
+                                            <div class="l">
+                                                <img src="/images/1.jpg">
+                                            </div>
+                                            <div class="r">
+                                                <h1>Green space all around</h1>
+                                                <p style="text-align: center;">"Success is possible"<br>Reaching your
+                                                    dream is our
+                                                    responsibility</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item">
+                                            <div class="l">
+                                                <img src="/images/2.jpg">
+                                            </div>
+                                            <div class="r">
+                                                <h1>Infrastructure</h1>
+                                                <p style="text-align: center;">The best favorable infrastructures for
+                                                    learning, research
+                                                    and all academic related activities!</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item">
+                                            <div class="l">
+                                                <img src="/images/6.jpg">
+                                            </div>
+                                            <div class="r">
+                                                <p style="text-align: center;">Best modernised IT school
+                                                    infrastructures<br>Where every
+                                                    student is proud to be</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item">
+                                            <div class="l">
+                                                <img src="/images/5.jpg">
+                                            </div>
+                                            <div class="r">
+                                                <h1>Student meetings!</h1>
+                                                <p style="text-align: center;">Each week student and staff meet for a
+                                                    prayer and a share
+                                                    discussion together</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item">
+                                            <div class="l">
+                                                <img src="/images/7.jpg">
+                                            </div>
+                                            <div class="r">
+                                                <h1>Graduations!</h1>
+                                                <p style="text-align: center;">Each year hundreds of student get their
+                                                    degrees<br>Your
+                                                    career dream is very possible!</p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+
+                                <button type="button" class="slider-nav"></button>
+                                <button type="button" class="slider-nav slider-nav-next"></button>
+
+                                
+                            </div>
+                        </div>
+
+                        <div id="Application" class="tabContent">
+                            <div class="center-box">
+                                <form autocomplete="on" action="/apply" method="POST" class="center-box-content"
+                                    style="width: 100% !important;" id="applicationform" enctype="multipart/form-data">
+                                    
+                                    <div class="progressbar">
+                                        <div class="progress" id="progress"></div>
+
+                                        <div class="progress-step progress-step-active" data-title="Profile"></div>
+                                        <div class="progress-step" data-title="Profile"></div>
+                                        <div class="progress-step" data-title="Contact"></div>
+                                        <div class="progress-step" data-title="Education"></div>
+                                        <div class="progress-step" data-title="Status"></div>
+                                        <div class="progress-step" data-title="Faculty"></div>
+                                        <div class="progress-step" data-title="Document"></div>
+                                        <div class="progress-step" data-title="Payment"></div>
+                                        <div class="progress-step" data-title="Finish"></div>
+                                    </div>
+
+                                    
+                                    <div class="form-step form-step-active">
+                                        <div class="input-group">
+                                            <label for="fname">First name</label>
+                                            <input type="text" name="fname" id="fname" />
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="lname">Last name</label>
+                                            <input type="text" name="lname" id="laname" />
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="gender">Gender</label>
+                                            <select name="gender" id="gender" style="width:100%; min-height: 36px;">
+                                                <option value="female">Female</option>
+                                                <option value="male">Male</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="dob">Enter your birth year</label>
+                                            <input type="number" name="dob" id="dob" />
+                                        </div>
+                                        <div class="">
+                                            <a href="#" class="btn btn-next width-50 ml-auto">Next&nbsp;<i
+                                                    class="fa fa-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="form-step">
+                                        <label for="profile">Select your recent clear passport photo</label>
+                                        <input type="file" name="profile" id="profile"
+                                            accept=".jpg" />
+                                        <div class="input-group autocomplete">
+                                            <label for="nationality">Nationality</label>
+                                            <input id="nationality" type="text" name="nationality"
+                                                placeholder="Enter country">
+                                        </div>
+                                        <div class="btns-group">
+                                            <a href="#" class="btn btn-prev"><i
+                                                    class="fa fa-arrow-left"></i>&nbsp;Previous</a>
+                                            <a href="#" class="btn btn-next">Next&nbsp;<i
+                                                    class="fa fa-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="form-step">
+                                        <div class="input-group">
+                                            <label for="phone">Phone</label>
+                                            <input type="text" name="phone" id="phone" />
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="email">Email</label>
+                                            <input type="text" name="email" id="email" />
+                                        </div>
+                                        <div class="btns-group">
+                                            <a href="#" class="btn btn-prev"><i
+                                                    class="fa fa-arrow-left"></i>&nbsp;Previous</a>
+                                            <a href="#" class="btn btn-next">Next&nbsp;<i
+                                                    class="fa fa-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="form-step">
+                                        <div class="input-group"
+                                            style="display: flex !important; flex-direction: row; align-items: center; justify-content: center;">
+                                            <label style="width: 10%;">Year</label>
+                                            <input type="number" name="year1" id="year1" style="width: 40%;" />
+                                            <label style="width: 10%;">&nbsp;School&nbsp;</label>
+                                            <input type="text" name="school1" id="school1" style="width: 40%;" />
+                                        </div>
+                                        <div class="input-group"
+                                            style="display: flex !important; flex-direction: row; align-items: center; justify-content: center;">
+                                            <label style="width: 10%;">Year</label>
+                                            <input type="number" name="year2" id="year2" style="width: 40%;" />
+                                            <label style="width: 10%;">&nbsp;School&nbsp;</label>
+                                            <input type="text" name="school2" id="school2" style="width: 40%;" />
+                                        </div>
+                                        <br>
+                                        <div class="btns-group">
+                                            <a href="#" class="btn btn-prev"><i
+                                                    class="fa fa-arrow-left"></i>&nbsp;Previous</a>
+                                            <a href="#" class="btn btn-next">Next&nbsp;<i
+                                                    class="fa fa-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="form-step">
+                                        <div class="input-group">
+                                            <label for="pstatus">Current employeement/occupation</label>
+                                            <input type="text" name="pstatus" id="pstatus" />
+                                        </div>
+                                        <div class="input-group"
+                                            style="display: flex !important; flex-direction: row; align-items: center; justify-content: center;">
+                                            <label for="sponsorship" style="width: 50%;">Select your
+                                                sponsorship&nbsp;</label>
+                                            <select name="sponsorship" id="sponsorship"
+                                                style="width: 50%; min-height: 56px;">
+                                                <option value="Self sponsored">Self sponsored</option>
+                                                <option value="sponsored">Sponsored</option>
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="btns-group">
+                                            <a href="#" class="btn btn-prev"><i
+                                                    class="fa fa-arrow-left"></i>&nbsp;Previous</a>
+                                            <a href="#" class="btn btn-next">Next&nbsp;<i
+                                                    class="fa fa-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="form-step">
+                                        <div class="input-group"
+                                            style="display: flex !important; flex-direction: row; align-items: center; justify-content: center;">
+                                            <label for="faculty" style="width: 50%;">Select Faculty&nbsp;</label>
+                                            <select name="faculty" id="faculty" style="width: 50%; min-height: 56px;">
+                                                <option value="IT">IT</option>
+                                                <option value="education">EDUCATION</option>
+                                                <option value="theology">THEOLOGY</option>
+                                                <option value="Medicine">Medecine</option>
+                                                <option value="businessandaccounting">BUSINESS AND ACCOUNTING</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group"
+                                            style="display: flex !important; flex-direction: row; align-items: center; justify-content: center;">
+                                            <label for="department" style="width: 50%;">Select department&nbsp;</label>
+                                            <select name="department" id="department"
+                                                style="width: 50%; min-height: 56px;">
+                                                <option value="Software engineering">Software engineering</option>
+                                                <option value="Network&Communication systems">Network & Communication
+                                                    systems</option>
+                                                <option value="Information management">Information management</option>
+                                                <option value="education">EDUCATION</option>
+                                                <option value="theology">THEOLOGY</option>
+                                                <option value="nursing">NURSING</option>
+                                                <option value="businessandaccounting">BUSINESS AND ACCOUNTING</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group"
+                                            style="display: flex !important; flex-direction: row; align-items: center; justify-content: center;">
+                                            <label for="program" style="width: 50%;">Select program&nbsp;</label>
+                                            <select name="program" id="program" style="width: 50%; min-height: 56px;">
+                                                <option value="day">Day</option>
+                                                <option value="evening">evening</option>
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="btns-group">
+                                            <a href="#" class="btn btn-prev"><i
+                                                    class="fa fa-arrow-left"></i>&nbsp;Previous</a>
+                                            <a href="#" class="btn btn-next">Next&nbsp;<i
+                                                    class="fa fa-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="form-step">
+                                        <div class="input-group">
+                                            <label for="certificate">Upload notified highschool certificates or
+                                                equivalent</label>
+                                            <input type="file" name="certificate" id="certificate"
+                                                accept="application/pdf, image/jpeg, image/jpg, image/png" />
+                                        </div>
+                                        <div class="input-group">
+                                            <label><i>You must have atleast the minimum of two principle passes on your
+                                                    certificates</i></label>
+                                        </div>
+                                        <div class="btns-group">
+                                            <a href="#" class="btn btn-prev"><i
+                                                    class="fa fa-arrow-left"></i>&nbsp;Previous</a>
+                                            <a href="#" class="btn btn-next">Next&nbsp;<i
+                                                    class="fa fa-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="form-step">
+                                        <div class="input-group">
+                                            <label for="pdate">Payment date(Date on bank slip)</label>
+                                            <input type="date" name="pdate" id="pdate" />
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="bank">Select bank you paid in</label>
+                                            <select name="bank" id="bank" style="width:100%; min-height: 48px;">
+                                                <option value="bk">BK</option>
+                                                <option value="equit">EQUITY BANK</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="slipnumber">Bank slip number</label>
+                                            <input type="text" name="slipnumber" id="slipnumber" />
+                                        </div>
+                                        <div class="input-group">
+                                            <label style="font-style: italic; font-size: small;">You are required to pay
+                                                the non
+                                                refundable application fee of 20,000Rwfr,<br>The fee must be paid at the
+                                                BK account
+                                                number 00040-00280275-75</label>
+
+                                        </div>
+                                        <div class="btns-group">
+                                            <a href="#" class="btn btn-prev"><i
+                                                    class="fa fa-arrow-left"></i>&nbsp;Previous</a>
+                                            <a href="#" class="btn btn-next">Next&nbsp;<i
+                                                    class="fa fa-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="form-step">
+                                        <div class="input-group">
+                                            <label for="where">Where did you get information about AUCA?</label>
+                                            <select name="where" id="where" style="width:100%; min-height: 48px;">
+                                                <option value="colleagues">My colleagues</option>
+                                                <option value="friends">My peer friends</option>
+                                                <option value="social media">Social media</option>
+                                                <option value="News">News agencies</option>
+                                                <option value="church">Church</option>
+                                                <option value="pamphlet">Pamplet</option>
+                                                <option value="adverts">Online ads</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="why">Why did you choose to apply at AUCA?(In little few
+                                                words)</label>
+                                            <textarea name="why" id="why" placeholder="Write here"
+                                                style="resize: none; height: 96px; width: 100%;"></textarea>
+                                        </div>
+                                        <div class="input-group"
+                                            style="display: flex; align-items: row; justify-content: center;">
+                                            <label><i>By submitting you accept that all information entered here is
+                                                    relevant
+                                                    and all
+                                                    document uploaded are legally valid</i></label>
+                                        </div>
+                                        <div class="btns-group">
+                                            <a href="#" class="btn btn-prev">Previous</a>
+                                            <input type="submit" value="Submit" id="submit" class="btn" />
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                            </div>
+
+                        </div>
+
+                        <div id="Pending" class="tabContent">
+                            <div class="center-box">
+                                <div class="center-box-content" style="height: auto !important; width: 100%;">
+                                    <h3 style="color:#2596be; font-family: sans-serif; text-align: center;">Search document</h3>
+                                    <div style="display: flex; flex-direction: row; width: 100%; height: auto;">
+                                        <input type="text" name="doc-id" id="doc-id"
+                                            placeholder="Enter document code" />
+                                        &nbsp;
+                                        <button
+                                            style="background-color: transparent; border: none; color: #2596be !important; bottom: 0; left: 0; padding: 0; margin: 0; border-radius: 12px;"
+                                            id="search-doc">
+                                            <div
+                                                class="circle-icon d-flex align-items-center justify-content-center me-3">
+                                                <i class="fa fa-search" id="search"
+                                                    style="color: #2596be !important;"></i>
+                                            </div>
+                                        </button>
+                                    </div>
+
+                                    <div style="display: flex; flex-direction: column; border-left: 2px solid #808080; margin-top: 24px; width: 100%; height: auto; padding-left: 6px;"
+                                        id="doc-info">
+                                    </div>
+                                    <div class="dots" id="loading-doc" style="display: none;">
+                                        <div class="col-3">
+                                            <div class="snippet" data-title="dot-typing">
+                                                <div class="stage">
+                                                    <div class="dot-typing"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="Assessment" class="tabContent">
+                            <div class="center-box">
+                                <div class="center-box-content assessment"
+                                    style="width: 100% !important; height: 100% !important; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: left; overflow-y: auto; background-color: #f0f2f5 !important;">
+
+                                    <div class="assess">
+
+                                        <!-- <input type="text" name="rate-id" id="rate-id" placeholder="Enter your student ID"> -->
+                                        <label id="stud_id"
+                                            style="color: #2596be; font-weight: 700; display: none;"></label>
+                                        <div style="margin-bottom: 5px;">
+                                            <input list="courses" id="course-select" name="course-select" placeholder="Select course"
+                                                style="height: 36px; min-width: 324px;cursor: pointer; border: 1px solid #2596be; outline: none; border-radius: 12px;">
+                                            <datalist id="courses">
+                                                <option value="">Select course</option>
+                                                <option value="Java">Java programming</option>
+                                                <option value="Webtech">Webtech</option>
+                                                <option value="Accounting I">Accounting I</option>
+                                                <option value="Linux">Introduction to linux</option>
+                                                <option value="Big data">Big data</option>
+                                                <option value="Bible doctrines">Bible doctrines</option>
+                                                <option value="Routing and Switching">Routing and Switching</option>
+                                                <option value="Digital computer fondumentals">DCF</option>
+                                                <option value="Software security">Software security</option>
+                                                <option value="Information management">Information management</option>
+                                                <option value="Software engineering">Software engineering</option>
+                                                <option value="Quality assurance">Quality assurance</option>
+                                                <option value="Multivariable">Multivariable calculus& differential equations</option>
+                                                <option value="Applied mathematics">Applied mathematics</option>
+                                                <option value="C programming">C Programming</option>
+                                            </datalist>
+                                            
+                                        </div>
+                                        <div class="pane">
+                                            <label class="title">How was lecturer's availability</label>
+
+                                            <div class="star">
+                                                <input type="radio" name="availability" id="av-1" value="1" checked="checked">
+                                                <label for="av-1">Low</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="availability" id="av-2" value="2">
+                                                <label for="av-2">Moderate</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="availability" id="av-3" value="3">
+                                                <label for="av-3">Medium</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="availability" id="av-4" value="4">
+                                                <label for="av-4">Good</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="availability" id="av-5" value="5">
+                                                <label for="av-5">Very good</label>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="pane">
+                                            <label class="title">How the course has been tought overall</label>
+                                            <div class="star">
+                                                <input type="radio" name="thought" id="th-1" value="1" checked="checked">
+                                                <label for="av-1">Poor</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="thought" id="th-2" value="2">
+                                                <label for="av-2">Moderate</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="thought" id="th-3" value="3">
+                                                <label for="av-3">Medium</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="thought" id="th-4" value="4">
+                                                <label for="av-4">Good</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="thought" id="th-5" value="5">
+                                                <label for="av-5">Excellent</label>
+                                            </div>
+                                        </div>
+                                        <div class="pane">
+                                            <label class="title">How was all course topics covered</label>
+                                            <div class="star">
+                                                <input type="radio" name="topic-covered" id="cov-1" value="1" checked="checked">
+                                                <label for="cov-1">Uncovered</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="topic-covered" id="cov-2" value="2">
+                                                <label for="cov-2">Moderate</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="topic-covered" id="cov-3" value="3">
+                                                <label for="cov-3">Medium</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="topic-covered" id="cov-4" value="4">
+                                                <label for="cov-4">Satisfied</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="topic-covered" id="cov-5" value="5">
+                                                <label for="cov-5">Very satisfied</label>
+                                            </div>
+                                        </div>
+                                        <div class="pane">
+                                            <label class="title">How is the lecturer assistance to students</label>
+                                            <div class="star">
+                                                <input type="radio" name="assistance" id="ass-1" value="1" checked="checked">
+                                                <label for="ass-1">No assistance at all</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="assistance" id="ass-2" value="2">
+                                                <label for="ass-2">He/She try</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="assistance" id="ass-3" value="3">
+                                                <label for="ass-3">Medium</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="assistance" id="ass-4" value="4">
+                                                <label for="ass-4">I'm satisfied</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="assistance" id="ass-5" value="5">
+                                                <label for="ass-5">I'm very satisfied</label>
+                                            </div>
+                                        </div>
+                                        <div class="pane">
+                                            <label class="title">How does the lecturer show christian moral behaviors</label>
+                                            <div class="star">
+                                                <input type="radio" name="behaviors" id="beh-1" value="1" checked="checked">
+                                                <label for="ass-1">There isn't</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="behaviors" id="beh-2" value="2">
+                                                <label for="beh-2">He/She try</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="behaviors" id="beh-3" value="3">
+                                                <label for="beh-3">Not everytime</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="behaviors" id="beh-4" value="4">
+                                                <label for="beh-4">Not at every moment</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="behaviors" id="beh-5" value="5">
+                                                <label for="beh-5">Excellent</label>
+                                            </div>
+                                        </div>
+                                        <div class="pane">
+                                            <label class="title">How have you liked the whole course</label>
+                                            <div class="star">
+                                                <input type="radio" name="course-liked" id="like-1" value="1" checked="checked">
+                                                <label for="like-1">I didn't like it</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="course-liked" id="like-2" value="2">
+                                                <label for="like-2">Somehow</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="course-liked" id="like-3" value="3">
+                                                <label for="like-3">If it was taught by another lecturer</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="course-liked" id="like-4" value="4">
+                                                <label for="like-4">Good</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="course-liked" id="like-5" value="5">
+                                                <label for="like-5">Very good</label>
+                                            </div>
+                                        </div>
+                                        <div class="pane">
+                                            <label class="title">How is the course important</label>
+                                            <div class="star">
+                                                <input type="radio" name="sufficient" id="suff-1" value="1" checked="checked">
+                                                <label for="suff-1">Irrelevant</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="sufficient" id="suff-2" value="2">
+                                                <label for="suff-2">Because i have to study it</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="sufficient" id="suff-3" value="3">
+                                                <label for="suff-3">Somehow</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="sufficient" id="suff-4" value="4">
+                                                <label for="suff-4">Atleast i got something from it</label>
+                                            </div>
+                                            <div class="star">
+                                                <input type="radio" name="sufficient" id="suff-5" value="5">
+                                                <label for="suff-5">Very important and needed</label>
+                                            </div>
+                                        </div>
+                                        <div class="pane">
+                                            <button class="btn btn-primary" id="ass-msg-btn" style="margin-bottom: 8px;">Would you like to leave a message?</button>
+                                            <textarea name="ass-comment" id="ass-comment" placeholder="Write your comment here"></textarea>
+                                        </div>
+                                        <div class="btns-group" id="submit-assessment">
+                                            <button class="btn btn-primary"
+                                                style="margin-right: auto; width: 100%;">Submit&nbsp;<i id="ass-pbar" class="fa fa-circle-o-notch fa-spin" style="display: none;"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="Drop" class="tabContent">
+                            <div class="center-box">
+                                <div class="center-box-content"
+                                    style="width: 100% !important; height: auto !important;">
+                                    <!-- <h3 style="color:#2596be; text-align: center;">Drop out</h3> -->
+
+                                    <input type="text" name="names" id="d-names" placeholder="Enter full names *">
+                                    <br>
+                                    <input type="text" name="faculty" id="d-faculty" placeholder="Enter your faculty *">
+                                    <br>
+                                    <input type="text" name="department" id="d-department"
+                                        placeholder="Enter your Department *">
+                                    <br>
+                                    <input type="text" name="email" id="d-email" placeholder="Your active email *">
+                                    <br>
+
+                                    <div style="display: flex; flex-direction: row;">
+                                        <label>Why do you want to drop out?</label>
+                                        &nbsp;
+                                        <select id="d-why" name="why" style="height: 36px; width: 100%;">
+                                            <option value="Financial problem">Financial problem</option>
+                                            <option value="Life disability">I have a life problem</option>
+                                            <option value="Not satisfied">Am not satisfied with AUCA life and programs
+                                            </option>
+                                            <option value="Left to other">I've switched to another campus</option>
+                                            <option value="Other">I prefer not to say</option>
+                                        </select>
+                                    </div>
+                                    <br>
+                                    <div class="input-group">
+                                        <label for="msg" style="font-size: small; color: darkgreen;">Please leave a
+                                            special message</label>
+                                        <textarea name="d-msg" id="d-msg" placeholder="Write here"
+                                            style="resize: none; height: 48px; width: 100%;"></textarea>
+                                    </div>
+                                    <div
+                                        style="width: 100%; height: auto; display: flex; flex-direction: row; align-items: center;">
+                                        <div class="dots" id="loading-drop-request"
+                                            style="display: none; margin-right: auto !important;">
+                                            <div class="col-3">
+                                                <div class="snippet" data-title="dot-typing">
+                                                    <div class="stage">
+                                                        <div class="dot-typing"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button
+                                            style="margin-left:auto; min-height:36px; background-color: #2596be; color: white; border: none; cursor: pointer; float: right; clear: both; border-radius: 4px; padding: 10px;"
+                                            id="drop-submit">Continue</button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div id="Card" class="tabContent">
+                            <div class="center-box">
+                                <div class="center-box-content"
+                                    style="width: 100% !important; height: auto !important;">
+                                    <!-- <h3 style="color:#2596be; text-align: center;">Apply for student card</h3> -->
+                                    <br>
+                                    <label id="stud_id_card" style="color: #2596be; font-weight: 700;"></label>
+                                    <input type="text" name="s-names" id="s-names" placeholder="Enter your names">
+                                    <br>
+                                    <input type="text" name="s-faculty" id="s-faculty" placeholder="Enter your faculty">
+                                    <br>
+                                    <input type="text" name="s-department" id="s-department"
+                                        placeholder="Enter your department">
+                                    <br>
+                                    <div
+                                        style="display: flex; flex-direction: row; align-items: center;justify-content: left;">
+                                        <label>Program</label>
+                                        &nbsp;
+                                        <select id="s-program" name="s-program" style="height: 36px; width: 100%;">
+                                            <option value="Day">Day</option>
+                                            <option value="Evening">Evening</option>
+                                        </select>
+                                    </div>
+                                    <br>
+                                    <div class="input-group">
+                                        <label class="btn btn-info">
+                                            <span class="fa fa-file-image-o">
+                                                <input type="file" id="s-profile"
+                                                    accept="image/jpeg, image/jpg, image/png" hidden>
+                                            </span> Attach passport photo
+                                        </label>
+                                    </div>
+                                    <div
+                                        style="width:100%; display: flex !important; flex-direction: row !important; align-items: center; justify-content: left;">
+                                        <label style="width: 80%;">Am applying for the first student card</label>
+                                        <input type="checkbox" id="first-card" name="first-card" checked
+                                            style="width: 24px; height: 24px;">
+                                    </div>
+                                    <br>
+                                    <div
+                                        style="width: 100%; height: auto; display: flex; flex-direction: row; align-items: center;">
+                                        <div class="dots" id="loading-card-request"
+                                            style=" margin-right: auto !important; display: none;">
+                                            <div class="col-3">
+                                                <div class="snippet" data-title="dot-typing">
+                                                    <div class="stage">
+                                                        <div class="dot-typing"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button
+                                            style="margin-left: auto; min-height:36px; background-color: #2596be; color: white; border: none; cursor: pointer; float: right; clear: both; border-radius: 4px; padding: 10px;"
+                                            id="card-ctn-btn">Continue</button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    </div>
+
+                    <!-- FORM MODAL -->
+                    <div class="modal fade" id="formModal">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="form-modal-title">Application submitted!</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body" id="form-modal-body">
+                                    Thank you for applying at AUCA, your Application has been successfully
+                                    received!<br><br>
+                                    We will review your application details to check if it meet all necessary
+                                    requirements for
+                                    acceptance.<br>
+                                    And later on you will be registered officially at AUCA!<br><br>
+                                    Your application code is '<b>002673-it-seng-2023</b>' take a note for this code, as
+                                    it will be used
+                                    to check the application status and to get official registration form once your
+                                    application is
+                                    accepted.
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                        id="form-model-close">Close</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FORM MODAL -->
+                    <div class="modal fade" id="aboutModal">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content" style="background-color: #23395d; color: white;">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="about-modal-title"
+                                        style=" width: 100%; text-align: center;"><img src="/images/auca_white.png"
+                                            style="height: 48px;">&nbsp;AUCA-Rwanda</h4>
+                                    <button type="button" class="close" data-bs-dismiss="modal"
+                                        style="color: white;"><span aria-hidden="true">&times;</span></button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body" id="form-modal-body"
+                                    style="display: flex; flex-direction: column; align-items: center;">
+                                    <h2>VISION</h2>
+                                    <p>Become an international center of academic learning with global impact.</p>
+                                    <h2>MISSION</h2>
+                                    <br>
+                                    <p>Provide Christ-centered wholistic quality education to prepare for service in
+                                        this world, and in the
+                                        life to come.</p>
+                                    <h2>PHILOSOPHY</h2>
+                                    <br>
+                                    <p>The Adventist University of Central Africa operates on the basis of the
+                                        Seventh-day Adventist
+                                        worldview,
+                                        which holds that God is the Creator and Sustainer of the universe and the source
+                                        of true knowledge.
+                                        The
+                                        entrance of sin caused man’s alienation from God, therefore the restoration of
+                                        the relation between
+                                        man
+                                        and his God is the main aim of the Christian Education that leads students to
+                                        discover and
+                                        understand
+                                        the truth through critical thinking.</p>
+                                    <h2>MOTTO</h2>
+                                    <br>
+                                    <p>Education for Eternity.</p>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                        id="form-model-close">Close</button>
+                </div> -->
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="idModal">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="form-modal-title"><i
+                                            class="fa-solid fa-triangle-exclamation"></i>&nbsp;Student portal</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body" id="alert-modal-body"
+                                    style="display: flex; flex-direction: column; font-family: 'Exo' sans-serif;">
+                                    <label>If you are an AUCA student please enter your student ID</label>
+                                    <input type="text" id="input-id" class="input-id" class="form-control"
+                                        placeholder="#####">
+                                    <button class="btn btn-primary" id="submit-id" name="submit-id"
+                                        style="margin-top: 10px; margin-left: auto;">Continue</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="splash">
+                        <p class="fade-in"
+                            style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                            <img src="/images/auca.png" style="width: 200px; padding: 5px;">
+                        </p>
+                    </div>
+
+                    <% if(locals.error){%>
+                        <input type="hidden" id="loc-error" value="<%= error %>">
+                        <div class="foo warn" id="alert-danger"
+                            style="width: auto !important; max-width: 80%; height: auto !important; padding: 6px; display: flex; flex-direction: column !important; align-items: center; justify-content: center;">
+                            <p style="float: left;">
+                                <%- error %>
+                            </p>
+                            <div id="close-danger"
+                                style="height: auto; width: auto; float: right; font-size: xx-large !important; cursor: pointer;">
+                                <span style="font-family: 'Exo' sans-serif;">&times;</span>
+                            </div>
+                        </div>
+                        <% } %>
+
+                            <div class="foo alert" id="client-message"
+                                style="width: auto !important; max-width: 80%; height: auto !important; padding: 6px; display: flex; flex-direction: row !important; align-items: center; justify-content: center;">
+                                <p style="float: left;" id="client-message-main"></p>
+                                <span id="close-message"
+                                    style="background-color: #DA1884 !important; color: white !important; height: 32px; width: 32px; border-radius: 32px; display: flex; align-items: center;justify-content: center; font-family: 'Exo' sans-serif; cursor: pointer; font-size: xx-large; margin-left: auto; margin-left: 16px;">&times;</span>
+                            </div>
+                            </div>
+
+                            <script
+                                src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+                            <script
+                                src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+                            <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+                            <script type="text/javascript"
+                                src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+                            <script src="/js/owl.carousel.min.js"></script>
+                            <script src="/js/script.js"></script>
+                            <script src="/js/modal.js"></script>
+
+
+                            <script>
+
+                                if (window.history.replaceState) {
+                                    window.history.replaceState(null, null, window.location.href);
+                                }
+                                var exception = $('#loc-error').val();
+                                var id = $('#id').val();
+
+                                $(document).ready(function () {
+                                    $('#client-message').hide();
+                                    $('#close-message').click(() => {
+                                        $('#client-message').hide();
+                                    });
+                                    $('.single-item').slick();
+                                    $(".prev-btn").click(function () {
+                                        $(".slick-list").slick("slickPrev");
+                                    });
+
+                                    $(".next-btn").click(function () {
+                                        $(".slick-list").slick("slickNext");
+                                    });
+                                    $(".prev-btn").addClass("slick-disabled");
+                                    $(".slick-list").on("afterChange", function () {
+                                        if ($(".slick-prev").hasClass("slick-disabled")) {
+                                            $(".prev-btn").addClass("slick-disabled");
+                                        } else {
+                                            $(".prev-btn").removeClass("slick-disabled");
+                                        }
+                                        if ($(".slick-next").hasClass("slick-disabled")) {
+                                            $(".next-btn").addClass("slick-disabled");
+                                        } else {
+                                            $(".next-btn").removeClass("slick-disabled");
+                                        }
+                                    });
+                                })
+
+                                // ================ DOM =============================
+                                var bLabels = document.getElementsByClassName("button-label");
+                                var tab = document.getElementsByClassName("tab");
+                                var tabContent = document.getElementsByClassName('tabContent');
+
+
+                                //==================== Variables ==========================
+                                var isLabelVisible = true;
+
+                                //=========================================================
+
+
+                                console.log(window.innerWidth);
+
+                                // window.addEventListener('resize', () => {
+                                //     console.log('Window resized');
+                                //     if (window.innerWidth < 1000) {
+                                //         hideLabels();
+                                //         isLabelVisible = false;
+                                //         $('#back').hide();
+                                //     } else {
+                                //         showLabels();
+                                //         isLabelVisible = true;
+                                //         $('#back').show();
+                                //     }
+                                // });
+
+                                // $(() => {
+                                //     console.log('Window width: ' + window.innerWidth);
+                                //     if (window.innerWidth < 1000) {
+                                //         hideLabels();
+                                //         isLabelVisible = false;
+                                //     } else {
+                                //         showLabels();
+                                //         isLabelVisible = true;
+                                //     }
+
+                                //     if (window.innerWidth > 1000) {
+                                //         $('#back').show();
+                                //     } else {
+
+                                //         $('#back').hide();
+
+                                //     }
+                                // });
+
+                                //=============================== TAB ACCESS =====================
+
+                                const splash = document.querySelector('.splash');
+                                if (!exception) {
+                                    document.addEventListener('DOMContentLoaded', (e) => {
+                                        setTimeout(() => {
+                                            splash.classList.add('display-none');
+                                            setTimeout(() => {
+                                                var id = $('#id').val();
+                                                if (!id) $('#idModal').modal('show');
+                                            }, 3000);
+                                        }, 3000);
+                                    })
+                                } else {
+                                    splash.classList.add('display-none');
+                                }
+
+                                function openTab(evt, tabName) {
+                                    var i, tabContent, tablinks;
+                                    tabContent = document.getElementsByClassName("tabContent");
+                                    for (i = 0; i < tabContent.length; i++) {
+                                        tabContent[i].style.display = "none";
+                                    }
+                                    tablinks = document.getElementsByClassName("tablinks");
+                                    for (i = 0; i < tablinks.length; i++) {
+                                        tablinks[i].className = tablinks[i].className.replace(" active", "");
+                                    }
+                                    document.getElementById(tabName).style.display = "block";
+                                    evt.currentTarget.className += " active";
+                                    console.log(tabName);
+
+                                    switch (tabName) {
+                                        case 'Application':
+                                            $('#home-img').attr('src', '/images/application.png');
+                                            break;
+                                        case 'Assessment':
+                                            $('#home-img').attr('src', '/images/assessments.png');
+                                            var id = $('#id').val();
+                                            if (id) $('#stud_id').text('STUDENT ID: ' + id);
+                                            else {
+                                                $('#stud_id').text('YOU ARE LOGGED IN AS A GUEST!');
+                                                $('#idModal').modal('show');
+                                            }
+                                            break;
+                                        case 'Drop':
+                                            $('#home-img').attr('src', '/images/drop-out.png');
+                                            var id = $('#id').val();
+                                            if (id) $('#stud_id_drop').text('STUDENT ID: ' + id);
+                                            else {
+                                                $('#stud_id_drop').text('YOU ARE LOGGED IN AS A GUEST!');
+                                                $('#idModal').modal('show');
+                                            }
+                                            break;
+                                        case 'Card':
+                                            $('#home-img').attr('src', '/images/student-card.png');
+                                            var id = $('#id').val();
+                                            if (id) $('#stud_id_card').text('YOUR STUDENT ID: ' + id);
+                                            else {
+                                                $('#stud_id_card').text('YOU ARE LOGGED IN AS A GUEST!');
+                                                $('#idModal').modal('show');
+                                            }
+                                            break;
+                                        case 'Pending':
+                                            $('#home-img').attr('src', '/images/document.png');
+                                            break;
+                                        default:
+                                            $('#home-img').attr('src', '/images/student-portal.png');
+                                            break;
+
+                                    }
+
+                                }
+
+                                // Get the element with id="defaultOpen" and click on it
+                                document.getElementById("defaultOpen").click();
+
+                                function toggleTab() {
+
+                                    if (window.innerWidth > 1000) {
+                                        $('#back').hide();
+
+                                        if (isLabelVisible) {
+                                            hideLabels();
+                                            isLabelVisible = false;
+                                        } else {
+                                            showLabels();
+                                            isLabelVisible = true;
+                                        }
+
+                                        if (window.innerWidth > 1000) {
+                                            $('#back').show();
+                                        } else {
+                                            $('#back').hide();
+                                        }
+                                    }
+
+                                }
+
+                                // function hideLabels() {
+
+                                //     for (let i = 0; i < bLabels.length; i++) {
+
+                                //         bLabels[i].style.display = "none";
+                                //         if (window.innerWidth > 700) tab[0].style.width = '5%';
+                                //         else tab[0].style.width = '10%';
+                                //         for (let j = 0; j < tabContent.length; j++) {
+                                //             if (window.innerWidth > 700) tabContent[j].style.width = '95%';
+                                //             else tabContent[j].style.width = '90%';
+                                //         }
+
+                                //     }
+
+                                //     document.getElementById("back-icon").className = "fa fa-arrow-right";
+                                // }
+
+                                // function showLabels() {
+                                //     for (let i = 0; i < bLabels.length; i++) {
+                                //         bLabels[i].style.display = "block";
+                                //         tab[0].style.width = '25%';
+                                //         for (let j = 0; j < tabContent.length; j++) tabContent[j].style.width = '75%';
+                                //     }
+                                //     document.getElementById("back-icon").className = "fa fa-arrow-left";
+                                // }
+
+                                $('#about-icon').click(() => {
+                                    $('#aboutModal').modal('show');
+                                });
+                                $('#close-danger').click(() => {
+                                    $('#alert-danger').hide();
+                                });
+                                $(document).ready(function () {
+                                    //console.log("ready!");
+                                });
+
+                                $('#submit-id').click(() => {
+                                    var id = $('#input-id').val();
+                                    console.log('id: ' + id);
+                                    location.assign('/student/' + id);
+                                    $('idModal').modal('hide');
+                                });
+
+                            </script>
+
+</body>
+
+</html>

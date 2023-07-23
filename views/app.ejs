@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application</title>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="/js/jquery-3.6.4.min.js"></script>
+    <link rel="icon" type="image/png" href="/images/auca.png" />
+    <style>
+        :root {
+            --primary: #005596;
+            --darkprimary: #005576;
+            --white: #ffffff;
+            --accent: #581845;
+            --content: #FFF;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        body {
+
+            background-color: #f0f2f5;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            padding: 1%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .card {
+            width: 550px;
+            height: auto;
+            background-color: white;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 5px rgba(68, 68, 68, 0.26);
+        }
+
+        #action {
+            width: 100%;
+            height: auto;
+            
+            margin-top: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            padding: 6px;
+        }
+
+        #action button {
+            height: 36px;
+            cursor: pointer;
+            background-color: var(--primary);
+            border: none;
+            outline: none;
+            color: white;
+            border-radius: 3px;
+        }
+
+        #action button:hover {
+            background-color: var(--darkprimary);
+        }
+
+        #confirm {
+            margin-left: auto;
+        }
+
+        #dets {
+            padding: 16px;
+        }
+
+        .card img {
+            margin-right: 16px;
+            margin-top: 16px;
+            width: 132px;
+            border: 1px dashed black;
+        }
+
+        #passport {
+            margin-left: auto;
+        }
+
+        #details {
+            overflow-y: auto;
+            padding: 16px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #details a {
+            color: red;
+            text-decoration: none;
+
+        }
+
+        #details a:hover {
+
+            text-decoration: underline;
+
+        }
+
+        #details a i {
+            font-size: x-large;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="card">
+            <img id="passport" alt="Passport photo">
+            <div id="details"></div>
+            <div id="action">
+                <button id="discard">Discard</button>
+                <button id="confirm">Approve</button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script>
+        var code;
+        const path = '/uploads/docs/profiles/';
+        const path2 = '/uploads/docs/applications/';
+
+        $(document).ready(() => {
+
+            code = localStorage.getItem('app-code');
+            console.log(code);
+            const src = path + code + '.jpg';
+            const doc = path2 + code + '.pdf';
+            if (code === null) document.location.href = '/admin/apps';
+
+            $.ajax({
+                url: "/app/",
+                type: "POST",
+                data: {
+                    appcode: code
+                },
+                success: function (data) {
+                    console.log(data);
+
+                    if (data) {
+                        var heOrShe = data[0].gender === 'male' ? 'he' : 'she';
+                        var details = '';
+                        details += '<b>Names:</b>&nbsp;' + data[0].fname + ' ' + data[0].lname
+                            + '<br><b>D.O.B:</b>&nbsp;' + data[0].dob
+                            + '<br><b>Gender:</b>&nbsp;' + data[0].gender
+                            + '<br><b>Nationality:</b>&nbsp;' + data[0].nationality
+                            + '<br><br><b>Email:</b>&nbsp;' + data[0].email
+                            + '<br><b>Phone:</b>&nbsp;' + data[0].phone
+                            + '<br><br><b>Education 1:</b>&nbsp;' + data[0].y1 + ' - ' + data[0].sc1
+                            + '<br><b>Education 2:</b>&nbsp;' + data[0].y2 + ' - ' + data[0].sc2
+                            + '<br><br><b>Occupation:</b>&nbsp;' + data[0].occupation
+                            + '<br><br><b>Sponsorship:</b>&nbsp;' + data[0].sponsorship
+                            + '<br><b>Faculty/Department applied:</b>&nbsp;' + data[0].faculty + '/' + data[0].department
+                            + '<br><b>Program:</b>&nbsp;' + data[0].program
+                            + '<br><br><b>Source of info:</b>&nbsp;' + data[0].got_from
+                            + '<br><b>Why ' + heOrShe + ' choosed AUCA:</b>&nbsp;' + data[0].why_choose
+                            + '<br><b>Date of Application:</b>&nbsp;' + data[0].ap_date
+                            + '<br><br><a href="' + doc + '" download><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;View certificate</a>'
+
+                    }
+                    $('#details').html(details);
+                    console.log(src);
+                    if (data) $('#passport').attr('src', src);
+                },
+                error: function (jqXHR, exception) {
+                    console.log('Error')
+                }
+            });
+
+            localStorage.removeItem('app-code');
+            //code = localStorage.getItem('app-code');
+            // document.onkeydown = function (e) {
+            //     if (event.keyCode == 123) {
+            //         return false;
+            //     }
+            //     if (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'i'.charCodeAt(0))) {
+            //         return false;
+            //     }
+            //     if (e.ctrlKey && e.shiftKey && (e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'c'.charCodeAt(0))) {
+            //         return false;
+            //     }
+            //     if (e.ctrlKey && e.shiftKey && (e.keyCode == 'J'.charCodeAt(0) || e.keyCode == 'j'.charCodeAt(0))) {
+            //         return false;
+            //     }
+            //     if (e.ctrlKey && (e.keyCode == 'U'.charCodeAt(0) || e.keyCode == 'u'.charCodeAt(0))) {
+            //         return false;
+            //     }
+            //     if (e.ctrlKey && (e.keyCode == 'S'.charCodeAt(0) || e.keyCode == 's'.charCodeAt(0))) {
+            //         return false;
+            //     }
+            // }
+        });
+
+        $('#confirm').click(() => {
+            $.ajax({
+                url: "/altering/app/",
+                type: "POST",
+                data: {
+                    code: `${code}`,
+                    action: '1'
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data==='1') document.location.href = '/admin/apps';
+                },
+                error: function (jqXHR, exception) {
+                    console.log('Error')
+                }
+            });
+        });
+        $('#discard').click(() => {
+            $.ajax({
+                url: "/altering/app/",
+                type: "POST",
+                data: {
+                    code: `${code}`,
+                    action: '2'
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data==='1') document.location.href = '/admin/apps';
+                },
+                error: function (jqXHR, exception) {
+                    console.log('Error')
+                }
+            });
+        })
+
+    </script>
+</body>
+
+</html>
